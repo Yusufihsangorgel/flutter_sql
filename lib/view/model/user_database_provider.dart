@@ -27,8 +27,8 @@ class UserDatabaseProvider {
     );
   } 
   // tablo oluşturme
-  void createTable(Database db){
-    db.execute('''CREATE TABLE $_userTableName ($columnId INTEGER PRIMARY KEY AUTOINCREMENT , 
+  Future<void> createTable(Database db) async {
+    await db.execute('''CREATE TABLE $_userTableName ($columnId INTEGER PRIMARY KEY AUTOINCREMENT , 
       $columnUserName VARCHAR(20),
       $columnAge INTEGER ,
       $columnIsMarried BOOLEAN) ''');
@@ -36,7 +36,7 @@ class UserDatabaseProvider {
 
 // verileri getirme
  Future<List<UserModel>> getList() async {
-
+ if(database != null) open();
   List<Map<String,dynamic>> userMaps = await database.query(_userTableName);
 
   return userMaps.map((e) => UserModel.fromJson(e)).toList();
@@ -45,7 +45,7 @@ class UserDatabaseProvider {
 
 // id ye göre veri getirme
   Future<UserModel?> getItem(int id) async {
-
+if(database != null) open();
  final userMaps = await database.query(_userTableName,
  where: '$columnId = ?',
  columns: [columnId],
@@ -63,7 +63,7 @@ class UserDatabaseProvider {
 
 // veri silme
 Future<bool> delete(int id) async {
-
+if(database != null) open();
  final userMaps = await database.delete(
    _userTableName,
  where: '$columnId = ?',
@@ -74,9 +74,22 @@ return userMaps != null;
 }
 
 
+Future<bool> insert(UserModel model) async {
+if(database != null) open();
+  final userMaps = await database.insert(
+   _userTableName,
+   model.toJson(),
+
+   conflictAlgorithm: ConflictAlgorithm.replace,);
+
+return userMaps != null;
+
+}
+
+
 // veri update etme
 Future<bool> update(int id,UserModel model) async {
-
+if(database != null) open();
   final userMaps = await database.update(
    _userTableName,
    model.toJson(),
