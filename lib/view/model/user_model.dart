@@ -10,7 +10,7 @@ class UserModel {
     id = json['id'];
     userName = json['userName'];
     age = json['age'];
-    isMarried = json['isMarried'];
+    isMarried = json['isMarried'] is int;
   }
 
   Map<String, dynamic> toJson() {
