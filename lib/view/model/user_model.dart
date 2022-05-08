@@ -1,4 +1,6 @@
-class UserModel {
+import 'package:flutter_sql/core/init/database/database_model.dart';
+
+class UserModel extends DatabaseModel<UserModel> {
   int? id;
   String? userName;
   int? age;
@@ -21,5 +23,11 @@ class UserModel {
     data['isMarried'] = this.isMarried;
     return data;
   }
+
+   @override
+  UserModel fromJson(Map<String, dynamic> json) {
+    return UserModel.fromJson(json);
+  }
 }
+
 

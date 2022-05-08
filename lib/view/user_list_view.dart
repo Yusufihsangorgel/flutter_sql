@@ -47,17 +47,17 @@ class UserListView extends UserListViewModel {
       children: [
         TextField(
           onChanged: (value) => userModel.userName = value,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
               hintText: "User Name", border: OutlineInputBorder()),
         ),
         TextField(
           onChanged: (value) => userModel.age = int.tryParse(value),
           decoration:
-              InputDecoration(hintText: "Age", border: OutlineInputBorder()),
+              const InputDecoration(hintText: "Age", border: OutlineInputBorder()),
         ),
         TextField(
           onChanged: (value) => userModel.isMarried = value.isNotEmpty,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
               hintText: "Is Married", border: OutlineInputBorder()),
         ),
       ],
